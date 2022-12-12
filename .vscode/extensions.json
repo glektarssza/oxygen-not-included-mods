@@ -1,0 +1,8 @@
+{
+    "recommendations": [
+        "ms-dotnettools.csharp",
+        "josephwoodward.vscodeilviewer",
+        "k--kato.docomment",
+        "tintoy.msbuild-project-tools"
+    ]
+}
