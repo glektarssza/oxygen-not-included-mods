@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="https://github.com/dotnet/msbuild/raw/main/src/MSBuild/MSBuild/Microsoft.Build.Core.xsd" type="application/xml" schematypens="http://schemas.microsoft.com/developer/msbuild/2003"?>
+<Project>
+    <Import Project="$(MSBuildThisFileDirectory)OxygenNotIncluded.props" />
+    <Target Name="StageArtifacts" DependsOnTargets="Build">
+        <ItemGroup>
+            <Artifacts Include="$(OutputPath)/*.dll" />
+            <Artifacts Include="$(MSBuildProjectDirectory)/mod.yaml" />
+            <Artifacts Include="$(MSBuildProjectDirectory)/mod_info.yaml" />
+        </ItemGroup>
+        <RemoveDir Directories="$(StagingDirectory)/$(MSBuildProjectName)" />
+        <MakeDir Directories="$(StagingDirectory)/$(MSBuildProjectName)" />
+        <Copy SourceFiles="@(Artifacts)" DestinationFolder="$(StagingDirectory)/$(MSBuildProjectName)" />
+    </Target>
+    <Target Name="CopyToDev" DependsOnTargets="StageArtifacts">
+        <ItemGroup>
+            <Artifacts Include="$(StagingDirectory)/$(MSBuildProjectName)/*" />
+        </ItemGroup>
+        <RemoveDir Directories="$(GameDevModDirectory)/$(MSBuildProjectName)" />
+        <MakeDir Directories="$(GameDevModDirectory)/$(MSBuildProjectName)" />
+        <Copy SourceFiles="@(Artifacts)" DestinationFolder="$(GameDevModDirectory)/$(MSBuildProjectName)" />
+    </Target>
+</Project>

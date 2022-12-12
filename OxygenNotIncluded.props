@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="https://github.com/dotnet/msbuild/raw/main/src/MSBuild/MSBuild/Microsoft.Build.Core.xsd" type="application/xml" schematypens="http://schemas.microsoft.com/developer/msbuild/2003"?>
+<Project>
+   <PropertyGroup>
+        <OxygenNotIncludedPropsImported>true</OxygenNotIncludedPropsImported>
+   </PropertyGroup>
+    <Choose>
+        <When Condition="$([MSBuild]::IsOSPlatform('Windows'))">
+            <PropertyGroup>
+                <GameBaseDirectory Condition="$(GameBaseDirectory) == ''">C:/Program Files (x86)/Steam/steamapps/common/OxygenNotIncluded</GameBaseDirectory>
+            </PropertyGroup>
+            <Choose>
+                <When Condition="$(OneDrive) != ''">
+                    <PropertyGroup>
+                        <GameBaseUserDirectory Condition="$(GameBaseUserDirectory) == ''">$(OneDrive)/Documents/Klei/OxygenNotIncluded</GameBaseUserDirectory>
+                    </PropertyGroup>
+                </When>
+                <Otherwise>
+                    <PropertyGroup>
+                        <GameBaseUserDirectory Condition="$(GameBaseUserDirectory) == ''">$(USERPROFILE)/Documents/Klei/OxygenNotIncluded</GameBaseUserDirectory>
+                    </PropertyGroup>
+                </Otherwise>
+            </Choose>
+        </When>
+        <When Condition="$([MSBuild]::IsOSPlatform('Linux'))">
+            <PropertyGroup>
+                <GameBaseDirectory Condition="$(GameBaseDirectory) == ''"></GameBaseDirectory>
+            </PropertyGroup>
+        </When>
+        <When Condition="$([MSBuild]::IsOSPlatform('OSX'))">
+            <PropertyGroup>
+                <GameBaseDirectory Condition="$(GameBaseDirectory) == ''"></GameBaseDirectory>
+            </PropertyGroup>
+        </When>
+    </Choose>
+    <PropertyGroup>
+        <GameAssemblyDirectory Condition="$(GameAssemblyDirectory) == ''">$(GameBaseDirectory)/OxygenNotIncluded_Data/Managed</GameAssemblyDirectory>
+        <GameUserModDirectory Condition="$(GameUserModDirectory) == ''">$(GameBaseUserDirectory)/mods</GameUserModDirectory>
+        <GameDevModDirectory Condition="$(GameDevModDirectory) == ''">$(GameUserModDirectory)/dev</GameDevModDirectory>
+        <StagingDirectory Condition="$(StagingDirectory) == ''">$(MSBuildThisFileDirectory)staging</StagingDirectory>
+    </PropertyGroup>
+   <ItemGroup>
+       <Reference Include="0Harmony.dll" HintPath="$(GameAssemblyDirectory)/0Harmony.dll" />
+       <Reference Include="Newtonsoft.Json.dll" HintPath="$(GameAssemblyDirectory)/Newtonsoft.Json.dll" />
+       <Reference Include="UnityEngine.dll" HintPath="$(GameAssemblyDirectory)/UnityEngine.dll" />
+       <Reference Include="UnityEngine.Core.dll" HintPath="$(GameAssemblyDirectory)/UnityEngine.Core.dll" />
+       <Reference Include="Assembly-CSharp-firstpass.dll" HintPath="$(GameAssemblyDirectory)/Assembly-CSharp-firstpass.dll" />
+       <Reference Include="Assembly-CSharp.dll" HintPath="$(GameAssemblyDirectory)/Assembly-CSharp.dll" />
+   </ItemGroup>
+</Project>
