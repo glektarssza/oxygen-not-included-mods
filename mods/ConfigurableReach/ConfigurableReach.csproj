@@ -4,7 +4,7 @@
     <Import Condition="$(OxygenNotIncludedPropsImported) != 'true'" Project="$(MSBuildThisFileDirectory)/../../OxygenNotIncluded.targets" />
     <PropertyGroup>
         <RootNamespace>ConfigurableReach</RootNamespace>
-        <TargetFramework>net451</TargetFramework>
+        <TargetFramework>net471</TargetFramework>
         <ImplicitUsings>disable</ImplicitUsings>
         <LangVersion>latest</LangVersion>
         <Nullable>enable</Nullable>
